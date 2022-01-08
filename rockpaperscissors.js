@@ -19,13 +19,14 @@ const winnerElement = document.getElementById('winner');
 var elements = document.querySelectorAll('.selection');
 
 elements.forEach(el => el.addEventListener('click', event => {
-    run_rps(event);
+    let userSelectedWeapon = event.target.id;
+
+    let computerSelectedWeapon =  Object.keys(selections)[getRandomInt(3)];
+
+    playRound(userSelectedWeapon, computerSelectedWeapon);
   }));
 
-function run_rps(event) {
-    const userSelectedWeapon = event.target.id;
-
-    const computerSelectedWeapon =  Object.keys(selections)[getRandomInt(3)];
+function playRound(userSelectedWeapon, computerSelectedWeapon) {
 
     let userResult;
 
