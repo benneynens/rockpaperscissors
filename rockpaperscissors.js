@@ -49,8 +49,13 @@ class Game {
             winsElement.game[winner].innerText = previousWinningStreak + 1;
 
             //reset round winner to zero
-            winsElement.round.user.innerText = 0;
-            winsElement.round.computer.innerText = 0;
+            for (let competitor in winsElement.round) winsElement.round[competitor].innerText = 0;
+
+
+            // winsElement.round.user.innerText = 0;
+            // winsElement.round.computer.innerText = 0;
+
+            // for (myVal in winsElement.round) console.log (myVal)
         } 
     }
 
