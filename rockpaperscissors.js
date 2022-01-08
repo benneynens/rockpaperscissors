@@ -15,8 +15,49 @@ const userElement = document.getElementById('user_selection');
 const computerElement = document.getElementById('computer_selection');
 const winnerElement = document.getElementById('winner');
 
+const winsElement = {
+    round: {
+        user: document.getElementById('userRoundWins'),
+        computer: document.getElementById('computerRoundWins'),
+    },
+    game: {
+        user: document.getElementById('userGameWins'),
+        computer: document.getElementById('computerGameWins'),
+    }
+}
+
+let games = [];
+
+class Game {
+    constructor () {
+        this.user = 0;
+        this.computer = 0;
+        this.roundComplete = false;
+    }
+
+    roundWin (winner) {
+        this[winner]++;
+        winsElement.round[winner].innerHTML = this[winner];
+        this.gameWinCheck(winner);
+
+    }
+
+    gameWinCheck (winner) {
+        if (this[winner] == 5) {
+            this.roundComplete = true;
+            let previousWinningStreak = parseInt( winsElement.game[winner].innerText );
+            winsElement.game[winner].innerText = previousWinningStreak + 1;
+
+            //reset round winner to zero
+            winsElement.round.user.innerText = 0;
+            winsElement.round.computer.innerText = 0;
+        } 
+    }
+
+}
+ 
 //register click event
-var elements = document.querySelectorAll('.selection');
+const elements = document.querySelectorAll('.selection');
 
 elements.forEach(el => el.addEventListener('click', event => {
     let userSelectedWeapon = event.target.id;
@@ -28,17 +69,20 @@ elements.forEach(el => el.addEventListener('click', event => {
 
 function playRound(userSelectedWeapon, computerSelectedWeapon) {
 
-    let userResult;
+    if (games.length === 0 || games[0].roundComplete) games.unshift ( new Game() );
+
+    let winner;
 
     if (userSelectedWeapon === computerSelectedWeapon) {
-        userResult = 'draw';
+        winner = 'draw';
     } else if ( selections[userSelectedWeapon] !== computerSelectedWeapon ) {
-        userResult = 'win'
+        winner = 'user'
     } else {
-        userResult = 'lose';
+        winner = 'computer';
     }
+    if (winner != 'draw') games[0].roundWin(winner);
 
-    displaySelections (userSelectedWeapon, computerSelectedWeapon, userResult);
+    displaySelections (userSelectedWeapon, computerSelectedWeapon, winner);
 
 }
 
