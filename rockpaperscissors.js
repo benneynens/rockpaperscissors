@@ -39,7 +39,6 @@ class Game {
         this[winner]++;
         winsElement.round[winner].innerHTML = this[winner];
         this.gameWinCheck(winner);
-
     }
 
     gameWinCheck (winner) {
@@ -50,15 +49,8 @@ class Game {
 
             //reset round winner to zero
             for (let competitor in winsElement.round) winsElement.round[competitor].innerText = 0;
-
-
-            // winsElement.round.user.innerText = 0;
-            // winsElement.round.computer.innerText = 0;
-
-            // for (myVal in winsElement.round) console.log (myVal)
         } 
     }
-
 }
  
 //register click event
@@ -72,8 +64,11 @@ elements.forEach(el => el.addEventListener('click', event => {
     playRound(userSelectedWeapon, computerSelectedWeapon);
   }));
 
-function playRound(userSelectedWeapon, computerSelectedWeapon) {
+function getRandomInt(max) {
+return Math.floor(Math.random() * max);
+}
 
+function playRound(userSelectedWeapon, computerSelectedWeapon) {
     if (games.length === 0 || games[0].roundComplete) games.unshift ( new Game() );
 
     let winner;
@@ -91,16 +86,8 @@ function playRound(userSelectedWeapon, computerSelectedWeapon) {
 
 }
 
-function getRandomInt(max) {
-    return Math.floor(Math.random() * max);
-  }
-
 function displaySelections (userSelectedWeapon, computerSelectedWeapon, winner) {
     userElement.innerHTML = 'You selected '+userSelectedWeapon;
     computerElement.innerHTML = 'Computer selected '+computerSelectedWeapon;
     winnerElement.innerHTML = 'You ' + winner;
 }
-
-//get result of computer's rock paper scissors
-
-//
